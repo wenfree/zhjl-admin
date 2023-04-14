@@ -1,0 +1,57 @@
+import request from '@/utils/request'
+
+export function fetchList(query) {
+  return request({
+    url: '/?s=App.Index.Select_where',
+    method: 'post',
+    params: query
+  })
+}
+
+export function deleteById(data) {
+  return request({
+    url: '/?s=App.Index.Delete',
+    method: 'post',
+    data
+  })
+}
+
+export function insert(data) {
+  return request({
+    url: '/?s=App.Index.Update',
+    method: 'post',
+    data
+  })
+}
+
+export function PriceInsert(data) {
+  return request({
+    url: '/?s=App.Fibrpro.add',
+    method: 'post',
+    data
+  })
+}
+
+export function fetchPv(pv) {
+  return request({
+    url: '/vue-element-admin/article/pv',
+    method: 'get',
+    params: { pv }
+  })
+}
+
+export function createArticle(data) {
+  return request({
+    url: '/vue-element-admin/article/create',
+    method: 'post',
+    data
+  })
+}
+
+export function updateArticle(data) {
+  return request({
+    url: '/vue-element-admin/article/update',
+    method: 'post',
+    data
+  })
+}
