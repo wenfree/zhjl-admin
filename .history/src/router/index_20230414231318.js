@@ -188,7 +188,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'work',
-        component: () => import('@/views/zhjl-zzh/zhjl-Ledger.vue'),
+        component: () => import('@/views/zhjl-zzh/work.vue'),
         name: '订单台账',
         meta: { title: '订单台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
       }

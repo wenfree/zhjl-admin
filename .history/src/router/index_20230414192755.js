@@ -154,29 +154,12 @@ export const asyncRoutes = [
     children: [
       {
         path: 'work',
-        component: () => import('@/views/zhjl-zzh/index.vue'),
+        component: () => import('@/views/hzjl-zzh/dashboard.vue'),
         name: '个人工作台',
         meta: { title: '个人工作台', icon: 'peoples', noCache: true, roles: ['zhjl'] }
       }
     ]
   }, 
-  {
-    path: '/zhjlsbtz',
-    component: Layout,
-    meta: {
-      title: '恒泽计量',
-      icon: 'skill',
-      roles: ['admin', 'editor', 'zhjl']
-    },
-    children: [
-      {
-        path: 'work',
-        component: () => import('@/views/zhjl-zzh/zhjl-Instrument.vue'),
-        name: '仪器台账',
-        meta: { title: '仪器台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
-      }
-    ]
-  },
   {
     path: '/zhjltdtz',
     component: Layout,
@@ -188,12 +171,30 @@ export const asyncRoutes = [
     children: [
       {
         path: 'work',
-        component: () => import('@/views/zhjl-zzh/zhjl-Ledger.vue'),
+        component: () => import('@/views/hzjl-zzh/work.vue'),
         name: '订单台账',
         meta: { title: '订单台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
       }
     ]
   },
+  {
+    path: '/zhjlsbtz',
+    component: Layout,
+    meta: {
+      title: '恒泽计量',
+      icon: 'skill',
+      roles: ['admin', 'editor', 'zhjl']
+    },
+    children: [
+      {
+        path: 'work',
+        component: () => import('@/views/hzjl-zzh/work.vue'),
+        name: '仪器台账',
+        meta: { title: '仪器台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
+      }
+    ]
+  },
+  
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
