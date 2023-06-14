@@ -143,7 +143,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
 
-   {
+  {
     path: '/zhjlsbtz',
     component: Layout,
     meta: {

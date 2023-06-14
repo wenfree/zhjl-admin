@@ -6,7 +6,7 @@
         <div class="filter-container">
           <el-form ref="where" :model="where" label-width="80px" :inline="true">
             <template v-for="(item,index) in whereJson">
-              <el-form-item :label="item.label" :key="index">
+              <el-form-item :key="index" :label="item.label">
                 <template v-if="item.type == 'daterange'">
                   <el-date-picker
                     :key="index"
@@ -21,7 +21,7 @@
                     :end-placeholder="item.end"
                   />
                 </template>
-    
+
                 <template v-else-if="item.type == 'time'">
                   <el-date-picker
                     :key="index"
@@ -40,20 +40,19 @@
                       :key="select"
                       :label="select"
                       :value="select"
-                    >
-                    </el-option>
+                    />
                   </el-select>
                 </template>
 
                 <template v-else-if="item.type == 'textarea'">
                   <el-input
+                    v-model="where[item.prop]"
                     type="textarea"
                     :rows="4"
                     placeholder="请输入内容"
-                    v-model="where[item.prop]">
-                  </el-input>
+                  />
                 </template>
-    
+
                 <template v-else>
                   <el-input
                     :key="index"
@@ -66,14 +65,12 @@
                 </template>
               </el-form-item>
             </template>
-          
+
             <el-button v-waves class="filter" type="primary" icon="el-icon-search" @click="getList">
               查詢
             </el-button>
           </el-form>
         </div>
-
-
 
         <div class="filter-container">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
@@ -84,13 +81,12 @@
           </el-button>
         </div>
 
-
       </el-tab-pane>
       <el-tab-pane label="预约配置" name="yuyue" class="reservation">
         <div class="filter-container">
           <el-form ref="where" :model="where" label-width="80px" :inline="true">
             <template v-for="(item,index) in reservationJson">
-              <el-form-item :label="item.label" :key="index">
+              <el-form-item :key="index" :label="item.label">
                 <template v-if="item.type == 'daterange'">
                   <el-date-picker
                     :key="index"
@@ -105,7 +101,7 @@
                     :end-placeholder="item.end"
                   />
                 </template>
-    
+
                 <template v-else-if="item.type == 'time'">
                   <el-date-picker
                     :key="index"
@@ -124,19 +120,18 @@
                       :key="select"
                       :label="select"
                       :value="select"
-                    >
-                    </el-option>
+                    />
                   </el-select>
                 </template>
-    
+
                 <template v-else-if="item.type == 'textarea'">
                   <el-input
+                    v-model="where[item.prop]"
                     style="width:620px;margin-right:5px;"
                     type="textarea"
                     :rows="4"
                     placeholder="请输入内容"
-                    v-model="where[item.prop]">
-                  </el-input>
+                  />
                 </template>
 
                 <template v-else>
@@ -158,7 +153,7 @@
           </el-button>
         </div>
 
-        <el-divider><i class="el-icon-mobile-phone"></i></el-divider>
+        <el-divider><i class="el-icon-mobile-phone" /></el-divider>
 
         <div class="filter-container">
           <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
@@ -174,9 +169,6 @@
       </el-tab-pane>
     </el-tabs>
 
-    
-
-
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -188,12 +180,11 @@
       @selection-change="setSelectRows"
     >
       <el-table-column show-overflow-tooltip type="selection" />
-      <el-table-column type="index"></el-table-column>
+      <el-table-column type="index" />
       <template v-for="item in columnJson">
         <el-table-column :key="item.lalel" :prop="item.prop" :label="item.label" />
       </template>
 
-      
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button size="mini" icon="detel" @click="history(scope.row)">历史证书</el-button>
@@ -219,7 +210,7 @@
       :visible.sync="drawer"
       direction="ltr"
       size="90%"
-      >
+    >
       <el-main>
         <div>仪器名称：  {{ historyList.仪器名称 }}</div>
         <div>型号规格：  {{ historyList.型号规格 }}</div>
@@ -237,12 +228,12 @@
           style="width: 100%;"
           @sort-change="sortChange"
         >
-          <el-table-column type="index" label="#"></el-table-column>
+          <el-table-column type="index" label="#" />
           <el-table-column v-for="(item, index) in columnHistory" :key="index" :prop="item.prop" :label="item.label" />
-          
+
         </el-table>
 
-        <el-button style="margin-top: 15px;" v-waves class="filter-item" type="success" icon="el-icon-plus" @click="handleFilter">
+        <el-button v-waves style="margin-top: 15px;" class="filter-item" type="success" icon="el-icon-plus" @click="handleFilter">
           证书上传
         </el-button>
 
@@ -279,50 +270,50 @@ export default {
 
       },
       whereJson: [
-        { prop: 'department', placeholder: '使用部门', label:'使用部门', type: '' },
-        { prop: 'instrument_name', placeholder: '仪器名称', label:'仪器名称', type: '' },
-        { prop: 'instrument_level', placeholder: '仪器级别',  label:'仪器级别', type: '' },
-        { prop: 'calibration_date', placeholder: '校验日期', label:'校验日期', type: 'daterange',start:'启始日期', end:'结束日期' },
-        { prop: 'validity_period', placeholder: '有效日期',label:'有效日期', type: 'daterange',start:'启始日期', end:'结束日期' },
-        { prop: 'management_status', placeholder: '管理状态',label:'管理状态', type: '' },
-        { prop: 'manufacturer', placeholder: '制造厂家',label:'制造厂家', type: '' },
-        { prop: 'service_type', placeholder: '服务方式',label:'服务方式', type: 'select',  options: ['送检','现场','转送'] },
+        { prop: 'department', placeholder: '使用部门', label: '使用部门', type: '' },
+        { prop: 'instrument_name', placeholder: '仪器名称', label: '仪器名称', type: '' },
+        { prop: 'instrument_level', placeholder: '仪器级别', label: '仪器级别', type: '' },
+        { prop: 'calibration_date', placeholder: '校验日期', label: '校验日期', type: 'daterange', start: '启始日期', end: '结束日期' },
+        { prop: 'validity_period', placeholder: '有效日期', label: '有效日期', type: 'daterange', start: '启始日期', end: '结束日期' },
+        { prop: 'management_status', placeholder: '管理状态', label: '管理状态', type: '' },
+        { prop: 'manufacturer', placeholder: '制造厂家', label: '制造厂家', type: '' },
+        { prop: 'service_type', placeholder: '服务方式', label: '服务方式', type: 'select', options: ['送检', '现场', '转送'] }
       ],
       reservationJson: [
-        { prop: 'department', placeholder: '业务员', label:'业务员', type: '' },
-        { prop: 'instrument_name', placeholder: '联系电话', label:'联系电话', type: '' },
-        { prop: 'instrument_name', placeholder: '预约日期', label:'预约日期', type: '' },
-        { prop: 'instrument_name', placeholder: '仪器数量', label:'仪器数量', type: '' },
-        { prop: 'instrument_name', placeholder: '服务器', label:'仪器数量', type: '' },
-        { prop: 'service_type', placeholder: '服务方式',label:'服务方式', type: 'select',  options: ['送检','现场','转送'] },
-        { prop: 'service_type', placeholder: '证书单位',label:'证书单位', type: 'select',  options: ['A','B','C'] },
-        { prop: 'manufacturer', placeholder: '证书地址',label:'证书地址', type: '' },
-        { prop: 'manufacturer', placeholder: '备注',label:'备注', type: 'textarea' },
-        
+        { prop: 'department', placeholder: '业务员', label: '业务员', type: '' },
+        { prop: 'instrument_name', placeholder: '联系电话', label: '联系电话', type: '' },
+        { prop: 'instrument_name', placeholder: '预约日期', label: '预约日期', type: '' },
+        { prop: 'instrument_name', placeholder: '仪器数量', label: '仪器数量', type: '' },
+        { prop: 'instrument_name', placeholder: '服务器', label: '仪器数量', type: '' },
+        { prop: 'service_type', placeholder: '服务方式', label: '服务方式', type: 'select', options: ['送检', '现场', '转送'] },
+        { prop: 'service_type', placeholder: '证书单位', label: '证书单位', type: 'select', options: ['A', 'B', 'C'] },
+        { prop: 'manufacturer', placeholder: '证书地址', label: '证书地址', type: '' },
+        { prop: 'manufacturer', placeholder: '备注', label: '备注', type: 'textarea' }
+
       ],
       columnJson: [
-        {prop:'sn', label:'序号'},
-        {prop:'department', label:'使用部门'},
-        {prop:'instrument_level', label:'仪器级别'},
-        {prop:'instrument_name', label:'仪器名称'},
-        {prop:'model_specifications', label:'型号规格'},
-        {prop:'manufacturer', label:'制造厂家'},
-        {prop:'factory_number', label:'出厂编号'},
-        {prop:'management_number', label:'管理编号'},
-        {prop:'installation_location', label:'安装位置'},
-        {prop:'maximum_level', label:'准确度等级或最大允许误差'},
-        {prop:'number_of_instruments', label:'仪器数量'},
-        {prop:'calibration_date', label:'校准日期'},
-        {prop:'calibration_cycle', label:'周期'},
-        {prop:'measurement_range', label:'测量范围'},
-        {prop:'validity_period', label:'有效日期'},
-        {prop:'service_type', label:'服务方式'},
-        {prop:'certificate_number', label:'证书编号'},
-        {prop:'remarks', label:'备注'},
-        {prop:'expiration_progress', label:'到期进度'},
-        {prop:'management_status', label:'管理状态'},
-        {prop:'person_in_charge', label:'负责人'},
-        {prop:'traceability_institution', label:'溯源机构'},
+        { prop: 'sn', label: '序号' },
+        { prop: 'department', label: '使用部门' },
+        { prop: 'instrument_level', label: '仪器级别' },
+        { prop: 'instrument_name', label: '仪器名称' },
+        { prop: 'model_specifications', label: '型号规格' },
+        { prop: 'manufacturer', label: '制造厂家' },
+        { prop: 'factory_number', label: '出厂编号' },
+        { prop: 'management_number', label: '管理编号' },
+        { prop: 'installation_location', label: '安装位置' },
+        { prop: 'maximum_level', label: '准确度等级或最大允许误差' },
+        { prop: 'number_of_instruments', label: '仪器数量' },
+        { prop: 'calibration_date', label: '校准日期' },
+        { prop: 'calibration_cycle', label: '周期' },
+        { prop: 'measurement_range', label: '测量范围' },
+        { prop: 'validity_period', label: '有效日期' },
+        { prop: 'service_type', label: '服务方式' },
+        { prop: 'certificate_number', label: '证书编号' },
+        { prop: 'remarks', label: '备注' },
+        { prop: 'expiration_progress', label: '到期进度' },
+        { prop: 'management_status', label: '管理状态' },
+        { prop: 'person_in_charge', label: '负责人' },
+        { prop: 'traceability_institution', label: '溯源机构' }
       ],
       columnHistory: [
         { prop: '校准日期', label: '校准日期' },
@@ -330,31 +321,31 @@ export default {
         { prop: '有效日期', label: '有效日期' },
         { prop: '校准证书', label: '校准证书' },
         { prop: '操作', label: '操作' },
-        { prop: '证书确认', label: '证书确认' },
+        { prop: '证书确认', label: '证书确认' }
       ],
       historyArr: [
         {
-          校准日期:'20220415',
-          溯源机构:'泽恒计量检测（北京）有限公司',
-          有效日期:'20230414',
-          校准证书:'ZHJL-CA-202204150244',
-          操作:'申请修改',
+          校准日期: '20220415',
+          溯源机构: '泽恒计量检测（北京）有限公司',
+          有效日期: '20230414',
+          校准证书: 'ZHJL-CA-202204150244',
+          操作: '申请修改',
           证书确认: '证书信息'
         },
         {
-          校准日期:'20220415',
-          溯源机构:'赛多利斯',
-          有效日期:'20230414',
-          校准证书:'ZHJL-CA-202204150244',
-          操作:'下载',
+          校准日期: '20220415',
+          溯源机构: '赛多利斯',
+          有效日期: '20230414',
+          校准证书: 'ZHJL-CA-202204150244',
+          操作: '下载',
           证书确认: '证书信息'
-        },
+        }
       ],
       downloadLoading: false,
       drawer: false,
       historyList: [],
       activeName: 'serach',
-      selectRows:[]
+      selectRows: []
     }
   },
   created() {
@@ -384,7 +375,7 @@ export default {
     delById(id) {
 
     },
-    history(val){
+    history(val) {
       this.drawer = true
       this.historyList = val
     },
@@ -528,12 +519,11 @@ export default {
       return sort === `+${key}` ? 'ascending' : 'descending'
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      console.log(tab, event)
     }
   }
 }
 </script>
-
 
 <style scoped>
   .filter-container .el-form-item{

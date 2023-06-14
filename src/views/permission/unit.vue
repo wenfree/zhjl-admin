@@ -4,7 +4,7 @@
     <div class="filter-container">
       <el-form ref="where" :model="where" label-width="80px" :inline="true">
         <template v-for="(item,index) in whereJson">
-          <el-form-item :label="item.label" :key="index">
+          <el-form-item :key="index" :label="item.label">
             <template v-if="item.type == 'date'">
               <el-date-picker
                 :key="index"
@@ -42,7 +42,7 @@
             </template>
           </el-form-item>
         </template>
-      
+
         <el-button v-waves class="filter" type="primary" icon="el-icon-search" @click="getList">
           查詢
         </el-button>
@@ -189,23 +189,23 @@ export default {
 
       },
       whereJson: [
-        { prop: 'u_code', placeholder: '部门代码', label:'部门代码' },
-        { prop: 'u_name', placeholder: '部门名称', label:'部门名称' },
+        { prop: 'u_code', placeholder: '部门代码', label: '部门代码' },
+        { prop: 'u_name', placeholder: '部门名称', label: '部门名称' }
       ],
       columnJson: [
         // { prop: 'id', label: 'id' },
         { prop: 'u_code', label: '部门代码' },
-        { prop: 'u_name', label: '部门名称' },
+        { prop: 'u_name', label: '部门名称' }
       ],
       downloadLoading: false,
       drawer: false,
       form: {
         u_code: '',
-        u_name: '',
+        u_name: ''
       },
       formJson: [
         { label: '部门代码', prop: 'u_code', disable: false },
-        { label: '部门名称', prop: 'u_name' },
+        { label: '部门名称', prop: 'u_name' }
       ],
       button_name: '新增部门',
       editedId: ''
@@ -287,7 +287,7 @@ export default {
       this.drawer = true
       this.form = {
         u_code: '',
-        u_name: '',
+        u_name: ''
       }
       this.formJson[0].disable = false
     },
