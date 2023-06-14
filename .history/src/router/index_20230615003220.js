@@ -178,7 +178,7 @@ export const asyncRoutes = [
         path: 'certificate',
         component: () => import('@/views/zhjl-zzh/zhjl-Instrument.vue'),
         name: '证书管理',
-        meta: { title: '证书管理', icon: 'el-icon-files', noCache: true, roles: ['zhjl'] }
+        meta: { title: '证书管理', icon: 'el-icon-odometer', noCache: true, roles: ['zhjl'] }
       }
     ]
   },

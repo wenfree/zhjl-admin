@@ -187,7 +187,7 @@
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button size="mini" icon="detel" @click="history(scope.row)">历史证书</el-button>
-          <el-button size="mini" icon="el-icon-edit" @click="EditRow(scope.row)">编辑</el-button>
+          <el-button size="mini" icon="detel" @click="EditRow(scope.row)">编辑</el-button>
           <el-button size="mini" icon="detel" @click="delById(scope.row.id)">删除</el-button>
           <el-button size="mini" icon="detel" @click="delById(scope.row.id)">预约</el-button>
         </template>
@@ -549,7 +549,7 @@ export default {
       console.log('postdata', postdata)
 
       UpdateById(postdata).then(response => {
-        console.log('更新和新增接口', response)
+        console.log('更新接口', response.data)
 
         this.$notify({
           title: '返回提示',
@@ -610,11 +610,6 @@ export default {
       console.log(type)
       this.create.title = '新增仪器'
       this.create.drawer = true
-    },
-    EditRow(row){
-      this.form = row
-      this.create.drawer = true
-      this.create.title = '编辑仪器信息'
     }
   }
 }

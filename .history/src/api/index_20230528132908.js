@@ -7,13 +7,6 @@ export function fetchList(query) {
     params: query
   })
 }
-export function fetchZhjl(query) {
-  return request({
-    url: '/?s=App.Index.Select_zhjl',
-    method: 'post',
-    params: query
-  })
-}
 
 export function getMenu() {
   return request({

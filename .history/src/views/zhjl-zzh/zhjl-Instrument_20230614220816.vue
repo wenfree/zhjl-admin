@@ -549,7 +549,7 @@ export default {
       console.log('postdata', postdata)
 
       UpdateById(postdata).then(response => {
-        console.log('更新和新增接口', response)
+        console.log('更新和新增接口', response.data)
 
         this.$notify({
           title: '返回提示',

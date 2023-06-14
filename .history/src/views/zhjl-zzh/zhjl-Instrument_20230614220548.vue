@@ -549,7 +549,7 @@ export default {
       console.log('postdata', postdata)
 
       UpdateById(postdata).then(response => {
-        console.log('更新和新增接口', response)
+        console.log('更新接口', response.data)
 
         this.$notify({
           title: '返回提示',
@@ -613,8 +613,8 @@ export default {
     },
     EditRow(row){
       this.form = row
-      this.create.drawer = true
-      this.create.title = '编辑仪器信息'
+      this.create.drawer
+      this.create.title = '编辑器信息'
     }
   }
 }

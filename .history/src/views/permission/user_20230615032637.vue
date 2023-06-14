@@ -367,7 +367,7 @@ export default {
 
       const postData = {
         page:1,
-        size:20,
+        size:30,
         table: 'qyjbqkb',
         where: JSON.stringify({
           'qymc like ?': `%${item}%`
@@ -378,9 +378,8 @@ export default {
 
         this.restaurants = response.data.data
 
-        for(var i=0;i<this.restaurants.length;i++){
-          this.restaurants[i].value = this.restaurants[i].qymc
-        }
+        for
+
 
         console.log('restaurants', this.restaurants)
         this.listLoading = false

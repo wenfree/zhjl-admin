@@ -175,10 +175,10 @@ export const asyncRoutes = [
         meta: { title: '仪器管理', icon: 'el-icon-odometer', noCache: true, roles: ['zhjl'] }
       },
       {
-        path: 'certificate',
+        path: 'work',
         component: () => import('@/views/zhjl-zzh/zhjl-Instrument.vue'),
-        name: '证书管理',
-        meta: { title: '证书管理', icon: 'el-icon-files', noCache: true, roles: ['zhjl'] }
+        name: '仪器管理',
+        meta: { title: '仪器管理', icon: 'el-icon-odometer', noCache: true, roles: ['zhjl'] }
       }
     ]
   },

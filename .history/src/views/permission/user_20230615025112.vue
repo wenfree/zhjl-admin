@@ -89,8 +89,6 @@
                   :fetch-suggestions="querySearchAsync"
                   placeholder="请输入内容"
                   @select="handleSelect"
-                  @change="handleChange"
-                  @input="handleInput"
                 ></el-autocomplete>
               </el-form-item>
               <el-form-item v-else :key="item.label" :label="item.label" :prop="item.prop">
@@ -165,7 +163,7 @@
 </template>
 
 <script>
-import { fetchList,fetchZhjl, deleteById, upDateInfo } from '@/api/index'
+import { fetchList, deleteById, upDateInfo } from '@/api/index'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import { getName, getToken } from '@/utils/auth'
@@ -346,47 +344,16 @@ export default {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(results);
-      }, 2000);
+      }, 200 * Math.random());
     },
     createStateFilter(queryString) {
       return (state) => {
-        // return state.qymc
         return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
     },
     handleSelect(item) {
       console.log(item);
-    },
-    handleChange(item) {
-      console.log('公司Change', item);
-      console.log('公司Change-this', this.form.unit )
-    },
-    handleInput(item) {
-      console.log('公司Input', item);
-      console.log('公司Input-this', this.form.unit )
-
-      const postData = {
-        page:1,
-        size:20,
-        table: 'qyjbqkb',
-        where: JSON.stringify({
-          'qymc like ?': `%${item}%`
-        })
-      }
-      fetchZhjl(postData).then(response => {
-        console.log('公司数据', response)
-
-        this.restaurants = response.data.data
-
-        for(var i=0;i<this.restaurants.length;i++){
-          this.restaurants[i].value = this.restaurants[i].qymc
-        }
-
-        console.log('restaurants', this.restaurants)
-        this.listLoading = false
-      })
-
-    },
+    }
   }
 }
 </script>

@@ -6,7 +6,7 @@
         <div class="filter-container">
           <el-form ref="where" :model="where" label-width="80px" :inline="true">
             <template v-for="(item,index) in whereJson">
-              <el-form-item :key="index" :label="item.label" :class="item.prop">
+              <el-form-item :key="index" :label="item.label">
                 <template v-if="item.type == 'daterange'">
                   <el-date-picker
                     :key="index"
@@ -59,6 +59,7 @@
                     v-model="where[item.prop]"
                     clearable
                     :placeholder="item.placeholder"
+                    style="width:120px;margin-right:5px;"
                     class="filter"
                   />
                 </template>
@@ -187,7 +188,7 @@
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button size="mini" icon="detel" @click="history(scope.row)">历史证书</el-button>
-          <el-button size="mini" icon="el-icon-edit" @click="EditRow(scope.row)">编辑</el-button>
+          <el-button size="mini" icon="detel" @click="delById(scope.row.id)">编辑</el-button>
           <el-button size="mini" icon="detel" @click="delById(scope.row.id)">删除</el-button>
           <el-button size="mini" icon="detel" @click="delById(scope.row.id)">预约</el-button>
         </template>
@@ -242,33 +243,10 @@
 
     <el-drawer :title="create.title" :visible.sync="create.drawer" direction="ltr" size="80%">
       <el-main>
-        <div class="filter-container">
-            <el-button
-              :loading="listLoading"
-              type="success"
-              icon="el-icon-orange"
-              class="filter-item"
-              size="mini"
-              @click="UpDateInfo"
-            >
-              {{ create.button }}
-            </el-button>
-
-            <el-button
-            :loading="listLoading"
-            type=""
-            icon="el-icon-back"
-            class="filter-item"
-            size="mini"
-            @click="create.drawer = false"
-          >
-            返回
-          </el-button>
-        </div>
-
-        <el-form ref="form" :model="form" label-width="150px" class="form_createNew">
+        <el-form ref="form" :model="form" label-width="150px">
           <template v-for="(item, index) in formJson">
-            <el-form-item :label="item.label + ':'" :prop="item.prop" :key="index" :class="item.prop">
+            
+            <el-form-item :label="item.label + ':'" :prop="item.prop" :key="index">
               <template v-if="item.type == 'Checkbox'">
                 <el-checkbox-group v-model="form[item.prop]">
                   <el-checkbox v-for="check in item.opration" :key="check" :label="check">{{ check }}</el-checkbox>
@@ -279,17 +257,47 @@
                   <el-checkbox v-for="check in item.opration" :key="check" :label="check">{{ check }}</el-checkbox>
                 </el-checkbox-group>
               </template>
-              <template v-else-if="item.type == 'textarea'">
-                <el-input type="textarea" :rows="4" v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable"/>
-              </template>
 
-              <template v-else>
-                <el-input v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable" :style="item.style"/>
-              </template>
-              
+
+              <el-input v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable"/>
             </el-form-item>
 
+            <el-form-item v-if="item.type == 'Checkbox'" :key="index" :label="item.label" :prop="item.prop">
+              <el-checkbox-group v-model="form[item.prop]">
+                <el-checkbox v-for="check in item.opration" :key="check" :label="check">{{ check }}</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item v-else-if="item.type == 'selects'" :key="item.prop" :label="item.label" :prop="item.prop">
+              <el-select
+                v-model="form[item.prop]"
+                multiple
+                filterable
+                allow-create
+                default-first-option
+                placeholder="请选择"
+              >
+                <el-option v-for="item_ in item.options" :key="item_.value" :label="item_.label" :value="item_.value" />
+              </el-select>
+            </el-form-item>
+            <el-form-item v-else-if="item.type == 'img'" :key="item.prop" :label="item.label" :prop="item.prop">
+              <el-input v-model="form[item.prop]" />
+            </el-form-item>
+            <el-form-item v-else :key="item.label" :label="item.label" :prop="item.prop">
+              <el-input v-model="form[item.prop]" :disabled="item.disable" />
+            </el-form-item>
           </template>
+
+          <el-form-item>
+            <el-button
+              :loading="listLoading"
+              type="success"
+              icon="el-icon-orange"
+              class="filter-item"
+              @click="UpDateInfo"
+            >
+              {{ create.button }}
+            </el-button>
+          </el-form-item>
         </el-form>
       </el-main>
     </el-drawer>
@@ -298,7 +306,7 @@
 </template>
 
 <script>
-import { fetchList, deleteById, fetchPv, createArticle, updateArticle, UpdateById } from '@/api/index'
+import { fetchList, deleteById, fetchPv, createArticle, updateArticle } from '@/api/fibrpro'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import { getName, getToken } from '@/utils/auth'
@@ -387,7 +395,7 @@ export default {
         { prop: 'factory_number', label: '出厂编号' },
         { prop: 'management_number', label: '管理编号' },
         { prop: 'installation_location', label: '安装位置' },
-        { prop: 'maximum_level', label: '误差范围' },
+        { prop: 'maximum_level', label: '准确度等级或最大允许误差' },
         { prop: 'number_of_instruments', label: '仪器数量' },
         { prop: 'calibration_date', label: '校准日期' },
         { prop: 'calibration_cycle', label: '周期' },
@@ -395,11 +403,11 @@ export default {
         { prop: 'validity_period', label: '有效日期' },
         { prop: 'service_type', label: '服务方式' },
         { prop: 'certificate_number', label: '证书编号' },
+        { prop: 'remarks', label: '备注' },
         { prop: 'expiration_progress', label: '到期进度' },
         { prop: 'management_status', label: '管理状态' },
-        { prop: 'traceability_institution', label: '溯源机构' },
-        { prop: 'person_in_charge', label: '负责人', style:'width:70%;' },
-        { prop: 'remarks', label: '备注', placeholder:'多行输入', type: 'textarea', style:'width:50%;' },
+        { prop: 'person_in_charge', label: '负责人' },
+        { prop: 'traceability_institution', label: '溯源机构' }
       ],
       historyArr: [
         {
@@ -427,7 +435,7 @@ export default {
       create:{
         drawer:false,
         title:'新建仪器',
-        button:'保存',
+        button:'新建仪器',
       }
     }
   },
@@ -537,25 +545,23 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    UpDateInfo() {
-      this.drawer = false
-
-      var postdata = {
-        id: '',
-        table: 'phalapi_instrument',
-        arr: JSON.stringify(this.form)
-      }
-
-      console.log('postdata', postdata)
-
-      UpdateById(postdata).then(response => {
-        console.log('更新和新增接口', response)
-
-        this.$notify({
-          title: '返回提示',
-          message: response.data
-        })
-        this.getList()
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateArticle(tempData).then(() => {
+            const index = this.list.findIndex(v => v.id === this.temp.id)
+            this.list.splice(index, 1, this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Update Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
       })
     },
     updateList() {
@@ -610,11 +616,6 @@ export default {
       console.log(type)
       this.create.title = '新增仪器'
       this.create.drawer = true
-    },
-    EditRow(row){
-      this.form = row
-      this.create.drawer = true
-      this.create.title = '编辑仪器信息'
     }
   }
 }
@@ -630,18 +631,6 @@ export default {
     padding-top: 10px;
     border: 1px solid #DCDFE6;
     margin-bottom: 10px;
-  }
-
-  .form_createNew .el-form-item{
-    margin-bottom: 5px;
-    width: 40%;
-    float: left;
-  }
-  .form_createNew .person_in_charge{
-    width: 80%;
-  }
-  .form_createNew .remarks{
-    width: 71.5%;
   }
 </style>
 

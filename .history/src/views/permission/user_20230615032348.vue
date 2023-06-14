@@ -350,7 +350,6 @@ export default {
     },
     createStateFilter(queryString) {
       return (state) => {
-        // return state.qymc
         return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
     },
@@ -367,7 +366,7 @@ export default {
 
       const postData = {
         page:1,
-        size:20,
+        size:30,
         table: 'qyjbqkb',
         where: JSON.stringify({
           'qymc like ?': `%${item}%`
@@ -377,11 +376,6 @@ export default {
         console.log('公司数据', response)
 
         this.restaurants = response.data.data
-
-        for(var i=0;i<this.restaurants.length;i++){
-          this.restaurants[i].value = this.restaurants[i].qymc
-        }
-
         console.log('restaurants', this.restaurants)
         this.listLoading = false
       })

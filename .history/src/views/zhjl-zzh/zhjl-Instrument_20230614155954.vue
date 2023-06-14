@@ -187,7 +187,7 @@
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button size="mini" icon="detel" @click="history(scope.row)">历史证书</el-button>
-          <el-button size="mini" icon="el-icon-edit" @click="EditRow(scope.row)">编辑</el-button>
+          <el-button size="mini" icon="detel" @click="delById(scope.row.id)">编辑</el-button>
           <el-button size="mini" icon="detel" @click="delById(scope.row.id)">删除</el-button>
           <el-button size="mini" icon="detel" @click="delById(scope.row.id)">预约</el-button>
         </template>
@@ -284,7 +284,7 @@
               </template>
 
               <template v-else>
-                <el-input v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable" :style="item.style"/>
+                <el-input v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable" style="width: 250px;margin-bottom: 0px;"/>
               </template>
               
             </el-form-item>
@@ -398,8 +398,8 @@ export default {
         { prop: 'expiration_progress', label: '到期进度' },
         { prop: 'management_status', label: '管理状态' },
         { prop: 'traceability_institution', label: '溯源机构' },
-        { prop: 'person_in_charge', label: '负责人', style:'width:70%;' },
-        { prop: 'remarks', label: '备注', placeholder:'多行输入', type: 'textarea', style:'width:50%;' },
+        { prop: 'person_in_charge', label: '负责人', style:'width:100%;' },
+        { prop: 'remarks', label: '备注', placeholder:'多行输入', type: 'textarea', style:'width:100%;' },
       ],
       historyArr: [
         {
@@ -549,7 +549,7 @@ export default {
       console.log('postdata', postdata)
 
       UpdateById(postdata).then(response => {
-        console.log('更新和新增接口', response)
+        console.log('更新接口', response.data)
 
         this.$notify({
           title: '返回提示',
@@ -610,11 +610,6 @@ export default {
       console.log(type)
       this.create.title = '新增仪器'
       this.create.drawer = true
-    },
-    EditRow(row){
-      this.form = row
-      this.create.drawer = true
-      this.create.title = '编辑仪器信息'
     }
   }
 }
@@ -638,7 +633,7 @@ export default {
     float: left;
   }
   .form_createNew .person_in_charge{
-    width: 80%;
+    width: 60%;
   }
   .form_createNew .remarks{
     width: 71.5%;
