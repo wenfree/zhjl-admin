@@ -239,22 +239,21 @@
       </el-main>
     </el-drawer>
 
-
     <el-drawer :title="create.title" :visible.sync="create.drawer" direction="ltr" size="80%">
       <el-main>
         <div class="filter-container">
-            <el-button
-              :loading="listLoading"
-              type="success"
-              icon="el-icon-orange"
-              class="filter-item"
-              size="mini"
-              @click="UpDateInfo"
-            >
-              {{ create.button }}
-            </el-button>
+          <el-button
+            :loading="listLoading"
+            type="success"
+            icon="el-icon-orange"
+            class="filter-item"
+            size="mini"
+            @click="UpDateInfo"
+          >
+            {{ create.button }}
+          </el-button>
 
-            <el-button
+          <el-button
             :loading="listLoading"
             type=""
             icon="el-icon-back"
@@ -268,7 +267,7 @@
 
         <el-form ref="form" :model="form" label-width="150px" class="form_createNew">
           <template v-for="(item, index) in formJson">
-            <el-form-item :label="item.label + ':'" :prop="item.prop" :key="index" :class="item.prop">
+            <el-form-item :key="index" :label="item.label + ':'" :prop="item.prop" :class="item.prop">
               <template v-if="item.type == 'Checkbox'">
                 <el-checkbox-group v-model="form[item.prop]">
                   <el-checkbox v-for="check in item.opration" :key="check" :label="check">{{ check }}</el-checkbox>
@@ -280,13 +279,13 @@
                 </el-checkbox-group>
               </template>
               <template v-else-if="item.type == 'textarea'">
-                <el-input type="textarea" :rows="4" v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable"/>
+                <el-input v-model="form[item.prop]" type="textarea" :rows="4" :placeholder="item.placeholder" :disabled="item.disable" />
               </template>
 
               <template v-else>
-                <el-input v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable" :style="item.style"/>
+                <el-input v-model="form[item.prop]" :placeholder="item.placeholder" :disabled="item.disable" :style="item.style" />
               </template>
-              
+
             </el-form-item>
 
           </template>
@@ -324,7 +323,7 @@ export default {
       where: {
 
       },
-      form:{},
+      form: {},
       whereJson: [
         { prop: 'department', placeholder: '使用部门', label: '使用部门', type: '' },
         { prop: 'instrument_name', placeholder: '仪器名称', label: '仪器名称', type: '' },
@@ -398,8 +397,8 @@ export default {
         { prop: 'expiration_progress', label: '到期进度' },
         { prop: 'management_status', label: '管理状态' },
         { prop: 'traceability_institution', label: '溯源机构' },
-        { prop: 'person_in_charge', label: '负责人', style:'width:70%;' },
-        { prop: 'remarks', label: '备注', placeholder:'多行输入', type: 'textarea', style:'width:50%;' },
+        { prop: 'person_in_charge', label: '负责人', style: 'width:70%;' },
+        { prop: 'remarks', label: '备注', placeholder: '多行输入', type: 'textarea', style: 'width:50%;' }
       ],
       historyArr: [
         {
@@ -424,10 +423,10 @@ export default {
       historyList: [],
       activeName: 'serach',
       selectRows: [],
-      create:{
-        drawer:false,
-        title:'新建仪器',
-        button:'保存',
+      create: {
+        drawer: false,
+        title: '新建仪器',
+        button: '保存'
       }
     }
   },
@@ -611,7 +610,7 @@ export default {
       this.create.title = '新增仪器'
       this.create.drawer = true
     },
-    EditRow(row){
+    EditRow(row) {
       this.form = row
       this.create.drawer = true
       this.create.title = '编辑仪器信息'
