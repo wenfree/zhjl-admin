@@ -2,20 +2,20 @@
   <div class="app-container" style="background-color: #f1f1f1;">
     
 
-      <el-row :gutter="24" class="panel-group">
-        <el-col :span="24">
+      <el-row :gutter="20" class="panel-group">
+        <el-col :span="16">
           <el-main style="background-color: #fff;">
             <svg-icon icon-class="table"/> 托管器具预警
             <el-divider></el-divider>
 
-            <el-row :gutter="24" class="panel-group">
+            <el-row :gutter="20" class="panel-group">
               <el-col :span="6" v-for="(item, index) in iconJson" :key="index" class="card-panel-col">
                 <div class="card-panel">
                   <div class="card-panel-icon-wrapper icon-people">
                     <i :class="item.icon" />
                   </div>
                   <div class="card-panel-description">
-                    <div class="card-panel-text" @click="wraning(item.name)">
+                    <div class="card-panel-text">
                       {{ item.name }}
                     </div>
                     <count-to :start-val="0" :end-val="item.count" :duration="2600" class="card-panel-num" />
@@ -43,7 +43,7 @@
           </el-main>
 
         </el-col>
-        <!-- <el-col :span="0"></el-col> -->
+        <el-col :span="4"></el-col>
 
       </el-row>
 
@@ -89,13 +89,7 @@ export default {
 
   },
   methods: {
-    wraning(name) {
-      this.$notify({
-        title: name,
-      })
-
-      this.$router.push('/zhjlsbtz/work');
-    }
+    
   }
 }
 </script>

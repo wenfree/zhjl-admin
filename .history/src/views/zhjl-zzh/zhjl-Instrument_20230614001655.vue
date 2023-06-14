@@ -44,15 +44,6 @@
                     </el-option>
                   </el-select>
                 </template>
-
-                <template v-else-if="item.type == 'textarea'">
-                  <el-input
-                    type="textarea"
-                    :rows="4"
-                    placeholder="请输入内容"
-                    v-model="where[item.prop]">
-                  </el-input>
-                </template>
     
                 <template v-else>
                   <el-input
@@ -77,19 +68,20 @@
 
         <div class="filter-container">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
-            新建单个录入
+            导入
           </el-button>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
-            批量导入（excel导入）
+            新建
           </el-button>
         </div>
 
 
       </el-tab-pane>
-      <el-tab-pane label="预约配置" name="yuyue" class="reservation">
+      <el-tab-pane label="预约配置" name="yuyue">
+        预约配置
         <div class="filter-container">
           <el-form ref="where" :model="where" label-width="80px" :inline="true">
-            <template v-for="(item,index) in reservationJson">
+            <template v-for="(item,index) in whereJson">
               <el-form-item :label="item.label" :key="index">
                 <template v-if="item.type == 'daterange'">
                   <el-date-picker
@@ -129,16 +121,6 @@
                   </el-select>
                 </template>
     
-                <template v-else-if="item.type == 'textarea'">
-                  <el-input
-                    style="width:620px;margin-right:5px;"
-                    type="textarea"
-                    :rows="4"
-                    placeholder="请输入内容"
-                    v-model="where[item.prop]">
-                  </el-input>
-                </template>
-
                 <template v-else>
                   <el-input
                     :key="index"
@@ -151,24 +133,19 @@
                 </template>
               </el-form-item>
             </template>
+          
+            <el-button v-waves class="filter" type="primary" icon="el-icon-search" @click="getList">
+              查詢
+            </el-button>
           </el-form>
-
-          <el-button v-waves class="filter" type="success" icon="el-icon-search" @click="getList">
-            提交预约
-          </el-button>
         </div>
 
-        <el-divider><i class="el-icon-mobile-phone"></i></el-divider>
-
         <div class="filter-container">
-          <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
             批量导入
           </el-button>
-          <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
             添加仪器
-          </el-button>
-          <el-button v-waves size="mini" class="filter-item" type="dwarning" icon="el-icon-plus" @click="handleFilter">
-            删除明细行
           </el-button>
         </div>
       </el-tab-pane>
@@ -287,18 +264,6 @@ export default {
         { prop: 'management_status', placeholder: '管理状态',label:'管理状态', type: '' },
         { prop: 'manufacturer', placeholder: '制造厂家',label:'制造厂家', type: '' },
         { prop: 'service_type', placeholder: '服务方式',label:'服务方式', type: 'select',  options: ['送检','现场','转送'] },
-      ],
-      reservationJson: [
-        { prop: 'department', placeholder: '业务员', label:'业务员', type: '' },
-        { prop: 'instrument_name', placeholder: '联系电话', label:'联系电话', type: '' },
-        { prop: 'instrument_name', placeholder: '预约日期', label:'预约日期', type: '' },
-        { prop: 'instrument_name', placeholder: '仪器数量', label:'仪器数量', type: '' },
-        { prop: 'instrument_name', placeholder: '服务器', label:'仪器数量', type: '' },
-        { prop: 'service_type', placeholder: '服务方式',label:'服务方式', type: 'select',  options: ['送检','现场','转送'] },
-        { prop: 'service_type', placeholder: '证书单位',label:'证书单位', type: 'select',  options: ['A','B','C'] },
-        { prop: 'manufacturer', placeholder: '证书地址',label:'证书地址', type: '' },
-        { prop: 'manufacturer', placeholder: '备注',label:'备注', type: 'textarea' },
-        
       ],
       columnJson: [
         {prop:'sn', label:'序号'},
@@ -538,13 +503,6 @@ export default {
 <style scoped>
   .filter-container .el-form-item{
     margin-bottom: 8px;
-  }
-
-  .reservation{
-    padding: 5px 10px;
-    padding-top: 10px;
-    border: 1px solid #DCDFE6;
-    margin-bottom: 10px;
   }
 </style>
 

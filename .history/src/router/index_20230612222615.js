@@ -80,7 +80,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/zhjl-zzh/index.vue'),
         name: 'Dashboard',
-        meta: { title: '个人工作台', icon: 'el-icon-set-up', affix: true }
+        meta: { title: '个人工作台', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -143,7 +143,24 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
 
-   {
+  {
+    path: '/zhjluser',
+    component: Layout,
+    meta: {
+      title: '恒泽计量',
+      icon: 'skill',
+      roles: ['admin', 'editor', 'zhjl']
+    },
+    children: [
+      {
+        path: 'work',
+        component: () => import('@/views/zhjl-zzh/index.vue'),
+        name: '个人工作台',
+        meta: { title: '个人工作台', icon: 'peoples', noCache: true, roles: ['zhjl'] }
+      }
+    ]
+  }, 
+  {
     path: '/zhjlsbtz',
     component: Layout,
     meta: {
@@ -156,7 +173,7 @@ export const asyncRoutes = [
         path: 'work',
         component: () => import('@/views/zhjl-zzh/zhjl-Instrument.vue'),
         name: '仪器台账',
-        meta: { title: '仪器台账', icon: 'el-icon-odometer', noCache: true, roles: ['zhjl'] }
+        meta: { title: '仪器台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
       }
     ]
   },
@@ -173,33 +190,11 @@ export const asyncRoutes = [
         path: 'work',
         component: () => import('@/views/zhjl-zzh/zhjl-Ledger.vue'),
         name: '订单台账',
-        meta: { title: '订单台账', icon: 'el-icon-shopping-cart-1', noCache: true, roles: ['zhjl'] }
+        meta: { title: '订单台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
       }
     ]
   },
-  {
-    path: '/sys',
-    component: Layout,
-    meta: {
-      title: '系统管理',
-      icon: 'el-icon-setting',
-      roles: ['admin', 'editor']
-    },
-    children: [
-      {
-        path: 'user',
-        component: () => import('@/views/permission/user.vue'),
-        name: '人员管理',
-        meta: { title: '人员管理', icon: 'peoples', noCache: true, roles: ['admin'] }
-      },
-      {
-        path: 'unit',
-        component: () => import('@/views/permission/unit.vue'),
-        name: '部门管理',
-        meta: { title: '部门管理', icon: 'el-icon-office-building', noCache: true, roles: ['admin'] }
-      }
-    ]
-  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ];

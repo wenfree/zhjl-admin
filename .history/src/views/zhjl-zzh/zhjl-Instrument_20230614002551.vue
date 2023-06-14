@@ -77,16 +77,16 @@
 
         <div class="filter-container">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
-            新建单个录入
+            导入
           </el-button>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
-            批量导入（excel导入）
+            新建
           </el-button>
         </div>
 
 
       </el-tab-pane>
-      <el-tab-pane label="预约配置" name="yuyue" class="reservation">
+      <el-tab-pane label="预约配置" name="yuyue">
         <div class="filter-container">
           <el-form ref="where" :model="where" label-width="80px" :inline="true">
             <template v-for="(item,index) in reservationJson">
@@ -131,14 +131,13 @@
     
                 <template v-else-if="item.type == 'textarea'">
                   <el-input
-                    style="width:620px;margin-right:5px;"
                     type="textarea"
                     :rows="4"
                     placeholder="请输入内容"
                     v-model="where[item.prop]">
                   </el-input>
                 </template>
-
+                
                 <template v-else>
                   <el-input
                     :key="index"
@@ -151,24 +150,19 @@
                 </template>
               </el-form-item>
             </template>
+          
+            <el-button v-waves class="filter" type="primary" icon="el-icon-search" @click="getList">
+              查詢
+            </el-button>
           </el-form>
-
-          <el-button v-waves class="filter" type="success" icon="el-icon-search" @click="getList">
-            提交预约
-          </el-button>
         </div>
 
-        <el-divider><i class="el-icon-mobile-phone"></i></el-divider>
-
         <div class="filter-container">
-          <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
             批量导入
           </el-button>
-          <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
             添加仪器
-          </el-button>
-          <el-button v-waves size="mini" class="filter-item" type="dwarning" icon="el-icon-plus" @click="handleFilter">
-            删除明细行
           </el-button>
         </div>
       </el-tab-pane>
@@ -538,13 +532,6 @@ export default {
 <style scoped>
   .filter-container .el-form-item{
     margin-bottom: 8px;
-  }
-
-  .reservation{
-    padding: 5px 10px;
-    padding-top: 10px;
-    border: 1px solid #DCDFE6;
-    margin-bottom: 10px;
   }
 </style>
 

@@ -77,10 +77,10 @@
 
         <div class="filter-container">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
-            新建单个录入
+            导入
           </el-button>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
-            批量导入（excel导入）
+            新建
           </el-button>
         </div>
 

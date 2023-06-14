@@ -80,7 +80,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/zhjl-zzh/index.vue'),
         name: 'Dashboard',
-        meta: { title: '个人工作台', icon: 'el-icon-set-up', affix: true }
+        meta: { title: '个人工作台', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -182,7 +182,7 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: '系统管理',
-      icon: 'el-icon-setting',
+      icon: 'skill',
       roles: ['admin', 'editor']
     },
     children: [

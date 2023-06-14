@@ -2,13 +2,13 @@
   <div class="app-container" style="background-color: #f1f1f1;">
     
 
-      <el-row :gutter="24" class="panel-group">
-        <el-col :span="24">
+      <el-row :gutter="20" class="panel-group">
+        <el-col :span="20">
           <el-main style="background-color: #fff;">
             <svg-icon icon-class="table"/> 托管器具预警
             <el-divider></el-divider>
 
-            <el-row :gutter="24" class="panel-group">
+            <el-row :gutter="20" class="panel-group">
               <el-col :span="6" v-for="(item, index) in iconJson" :key="index" class="card-panel-col">
                 <div class="card-panel">
                   <div class="card-panel-icon-wrapper icon-people">

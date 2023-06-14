@@ -80,7 +80,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/zhjl-zzh/index.vue'),
         name: 'Dashboard',
-        meta: { title: '个人工作台', icon: 'el-icon-set-up', affix: true }
+        meta: { title: '个人工作台', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -173,7 +173,7 @@ export const asyncRoutes = [
         path: 'work',
         component: () => import('@/views/zhjl-zzh/zhjl-Ledger.vue'),
         name: '订单台账',
-        meta: { title: '订单台账', icon: 'el-icon-shopping-cart-1', noCache: true, roles: ['zhjl'] }
+        meta: { title: '订单台账', icon: 'peoples', noCache: true, roles: ['zhjl'] }
       }
     ]
   },
@@ -182,7 +182,7 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: '系统管理',
-      icon: 'el-icon-setting',
+      icon: 'skill',
       roles: ['admin', 'editor']
     },
     children: [
@@ -196,7 +196,7 @@ export const asyncRoutes = [
         path: 'unit',
         component: () => import('@/views/permission/unit.vue'),
         name: '部门管理',
-        meta: { title: '部门管理', icon: 'el-icon-office-building', noCache: true, roles: ['admin'] }
+        meta: { title: '部门管理', icon: 'peoples', noCache: true, roles: ['admin'] }
       }
     ]
   },

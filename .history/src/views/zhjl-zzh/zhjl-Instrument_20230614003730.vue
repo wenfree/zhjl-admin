@@ -77,10 +77,10 @@
 
         <div class="filter-container">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
-            新建单个录入
+            导入
           </el-button>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
-            批量导入（excel导入）
+            新建
           </el-button>
         </div>
 
@@ -157,8 +157,6 @@
             提交预约
           </el-button>
         </div>
-
-        <el-divider><i class="el-icon-mobile-phone"></i></el-divider>
 
         <div class="filter-container">
           <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
@@ -540,11 +538,9 @@ export default {
     margin-bottom: 8px;
   }
 
-  .reservation{
-    padding: 5px 10px;
-    padding-top: 10px;
-    border: 1px solid #DCDFE6;
-    margin-bottom: 10px;
+  .reservation .el-tabs__content{
+    padding: 5px;
+    border: 1px solid #444;
   }
 </style>
 

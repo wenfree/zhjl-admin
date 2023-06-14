@@ -105,6 +105,8 @@ export default {
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data
+
+      console.log(this.rolesList)
     },
 
     // Reshape the routes structure so that it looks the same as the sidebar

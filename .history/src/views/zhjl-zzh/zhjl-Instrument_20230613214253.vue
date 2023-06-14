@@ -7,18 +7,16 @@
           <el-form ref="where" :model="where" label-width="80px" :inline="true">
             <template v-for="(item,index) in whereJson">
               <el-form-item :label="item.label" :key="index">
-                <template v-if="item.type == 'daterange'">
+                <template v-if="item.type == 'date'">
                   <el-date-picker
                     :key="index"
                     v-model="where[item.prop]"
-                    type="daterange"
+                    type="date"
                     :placeholder="item.placeholder"
-                    format="yyyyMMdd"
+                    format="yyyy 年 MM 月 dd 日"
                     value-format="yyyy-MM-dd"
+                    style="width: 160px;margin-right: 5px;"
                     class="filter"
-                    style="width:240px;margin-right:5px;"
-                    :start-placeholder="item.start"
-                    :end-placeholder="item.end"
                   />
                 </template>
     
@@ -29,29 +27,9 @@
                     type="datetime"
                     :placeholder="item.placeholder"
                     value-format="yyyy-MM-dd HH:mm:ss"
+                    style="width: 260px;margin-right: 5px;"
                     class="filter"
                   />
-                </template>
-
-                <template v-else-if="item.type == 'select'">
-                  <el-select v-model="where[item.prop]" placeholder="请选择" style="width:120px;margin-right:5px;">
-                    <el-option
-                      v-for="select in item.options"
-                      :key="select"
-                      :label="select"
-                      :value="select"
-                    >
-                    </el-option>
-                  </el-select>
-                </template>
-
-                <template v-else-if="item.type == 'textarea'">
-                  <el-input
-                    type="textarea"
-                    :rows="4"
-                    placeholder="请输入内容"
-                    v-model="where[item.prop]">
-                  </el-input>
                 </template>
     
                 <template v-else>
@@ -60,7 +38,7 @@
                     v-model="where[item.prop]"
                     clearable
                     :placeholder="item.placeholder"
-                    style="width:120px;margin-right:5px;"
+                    style="width: 160px;margin-right: 5px;"
                     class="filter"
                   />
                 </template>
@@ -71,107 +49,10 @@
               查詢
             </el-button>
           </el-form>
-        </div>
-
-
-
-        <div class="filter-container">
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
-            新建单个录入
-          </el-button>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
-            批量导入（excel导入）
-          </el-button>
-        </div>
 
 
       </el-tab-pane>
-      <el-tab-pane label="预约配置" name="yuyue" class="reservation">
-        <div class="filter-container">
-          <el-form ref="where" :model="where" label-width="80px" :inline="true">
-            <template v-for="(item,index) in reservationJson">
-              <el-form-item :label="item.label" :key="index">
-                <template v-if="item.type == 'daterange'">
-                  <el-date-picker
-                    :key="index"
-                    v-model="where[item.prop]"
-                    type="daterange"
-                    :placeholder="item.placeholder"
-                    format="yyyyMMdd"
-                    value-format="yyyy-MM-dd"
-                    class="filter"
-                    style="width:240px;margin-right:5px;"
-                    :start-placeholder="item.start"
-                    :end-placeholder="item.end"
-                  />
-                </template>
-    
-                <template v-else-if="item.type == 'time'">
-                  <el-date-picker
-                    :key="index"
-                    v-model="where[item.prop]"
-                    type="datetime"
-                    :placeholder="item.placeholder"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    class="filter"
-                  />
-                </template>
-
-                <template v-else-if="item.type == 'select'">
-                  <el-select v-model="where[item.prop]" placeholder="请选择" style="width:120px;margin-right:5px;">
-                    <el-option
-                      v-for="select in item.options"
-                      :key="select"
-                      :label="select"
-                      :value="select"
-                    >
-                    </el-option>
-                  </el-select>
-                </template>
-    
-                <template v-else-if="item.type == 'textarea'">
-                  <el-input
-                    style="width:620px;margin-right:5px;"
-                    type="textarea"
-                    :rows="4"
-                    placeholder="请输入内容"
-                    v-model="where[item.prop]">
-                  </el-input>
-                </template>
-
-                <template v-else>
-                  <el-input
-                    :key="index"
-                    v-model="where[item.prop]"
-                    clearable
-                    :placeholder="item.placeholder"
-                    style="width:120px;margin-right:5px;"
-                    class="filter"
-                  />
-                </template>
-              </el-form-item>
-            </template>
-          </el-form>
-
-          <el-button v-waves class="filter" type="success" icon="el-icon-search" @click="getList">
-            提交预约
-          </el-button>
-        </div>
-
-        <el-divider><i class="el-icon-mobile-phone"></i></el-divider>
-
-        <div class="filter-container">
-          <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-document-add" @click="handleFilter">
-            批量导入
-          </el-button>
-          <el-button v-waves size="mini" class="filter-item" type="primary" icon="el-icon-plus" @click="handleFilter">
-            添加仪器
-          </el-button>
-          <el-button v-waves size="mini" class="filter-item" type="dwarning" icon="el-icon-plus" @click="handleFilter">
-            删除明细行
-          </el-button>
-        </div>
-      </el-tab-pane>
+      <el-tab-pane label="预约配置" name="yuyue">预约配置</el-tab-pane>
     </el-tabs>
 
     
@@ -185,12 +66,18 @@
       fit
       highlight-current-row
       style="width: 100%;"
-      @selection-change="setSelectRows"
+      @sort-change="sortChange"
     >
-      <el-table-column show-overflow-tooltip type="selection" />
       <el-table-column type="index"></el-table-column>
       <template v-for="item in columnJson">
-        <el-table-column :key="item.lalel" :prop="item.prop" :label="item.label" />
+        <el-table-column v-if="item.type && item.type == 'img'" :key="item.label" :label="item.label">
+          <template slot-scope="scope">
+            <!-- {{ scope.row.signature }} -->
+            <el-image :src="scope.row.signature" fit="fit" />
+          </template>
+        </el-table-column>
+
+        <el-table-column v-else :key="item.lalel" :prop="item.prop" :label="item.label" />
       </template>
 
       
@@ -279,26 +166,12 @@ export default {
 
       },
       whereJson: [
-        { prop: 'department', placeholder: '使用部门', label:'使用部门', type: '' },
-        { prop: 'instrument_name', placeholder: '仪器名称', label:'仪器名称', type: '' },
-        { prop: 'instrument_level', placeholder: '仪器级别',  label:'仪器级别', type: '' },
-        { prop: 'calibration_date', placeholder: '校验日期', label:'校验日期', type: 'daterange',start:'启始日期', end:'结束日期' },
-        { prop: 'validity_period', placeholder: '有效日期',label:'有效日期', type: 'daterange',start:'启始日期', end:'结束日期' },
-        { prop: 'management_status', placeholder: '管理状态',label:'管理状态', type: '' },
-        { prop: 'manufacturer', placeholder: '制造厂家',label:'制造厂家', type: '' },
-        { prop: 'service_type', placeholder: '服务方式',label:'服务方式', type: 'select',  options: ['送检','现场','转送'] },
-      ],
-      reservationJson: [
-        { prop: 'department', placeholder: '业务员', label:'业务员', type: '' },
-        { prop: 'instrument_name', placeholder: '联系电话', label:'联系电话', type: '' },
-        { prop: 'instrument_name', placeholder: '预约日期', label:'预约日期', type: '' },
-        { prop: 'instrument_name', placeholder: '仪器数量', label:'仪器数量', type: '' },
-        { prop: 'instrument_name', placeholder: '服务器', label:'仪器数量', type: '' },
-        { prop: 'service_type', placeholder: '服务方式',label:'服务方式', type: 'select',  options: ['送检','现场','转送'] },
-        { prop: 'service_type', placeholder: '证书单位',label:'证书单位', type: 'select',  options: ['A','B','C'] },
-        { prop: 'manufacturer', placeholder: '证书地址',label:'证书地址', type: '' },
-        { prop: 'manufacturer', placeholder: '备注',label:'备注', type: 'textarea' },
-        
+        { prop: 'door', placeholder: '部门', type: '' },
+        { prop: 'name', placeholder: '仪器名称' },
+        { prop: 'categroy', placeholder: '设备类别' },
+        { prop: 'checkDate', placeholder: '校验日期', type: 'daterange' },
+        { prop: 'Havedate', placeholder: '有效日期', type: 'daterange' },
+        { prop: 'state', placeholder: '管理状态', type: '' }
       ],
       columnJson: [
         {prop:'sn', label:'序号'},
@@ -306,7 +179,7 @@ export default {
         {prop:'instrument_level', label:'仪器级别'},
         {prop:'instrument_name', label:'仪器名称'},
         {prop:'model_specifications', label:'型号规格'},
-        {prop:'manufacturer', label:'制造厂家'},
+        {prop:'manufacturer', label:'制照厂家'},
         {prop:'factory_number', label:'出厂编号'},
         {prop:'management_number', label:'管理编号'},
         {prop:'installation_location', label:'安装位置'},
@@ -354,7 +227,6 @@ export default {
       drawer: false,
       historyList: [],
       activeName: 'serach',
-      selectRows:[]
     }
   },
   created() {
@@ -404,10 +276,6 @@ export default {
       if (prop === 'id') {
         this.sortByID(order)
       }
-    },
-    setSelectRows(val) {
-      console.log(val)
-      this.selectRows = val
     },
     sortByID(order) {
       if (order === 'ascending') {
@@ -533,18 +401,3 @@ export default {
   }
 }
 </script>
-
-
-<style scoped>
-  .filter-container .el-form-item{
-    margin-bottom: 8px;
-  }
-
-  .reservation{
-    padding: 5px 10px;
-    padding-top: 10px;
-    border: 1px solid #DCDFE6;
-    margin-bottom: 10px;
-  }
-</style>
-
