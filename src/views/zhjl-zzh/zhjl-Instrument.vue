@@ -357,7 +357,7 @@
 </template>
 
 <script>
-import {deleteById, UpdateById } from '@/api/index'
+import { deleteById, UpdateById } from '@/api/index'
 import { getsb } from '@/api/zhjl.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'

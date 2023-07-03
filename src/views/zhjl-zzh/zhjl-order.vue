@@ -250,7 +250,7 @@
 import { fetchList, UpdateById, GetOrder } from '@/api/index'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
-import { getName, } from '@/utils/auth'
+import { getName } from '@/utils/auth'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
