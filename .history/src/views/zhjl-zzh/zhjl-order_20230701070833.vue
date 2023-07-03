@@ -295,7 +295,6 @@ export default {
         { prop: 'manufacturer', placeholder: '备注', label: '备注', type: 'textarea' }
       ],
       columnJson: [
-        { prop: 'sid', label: 'sid' },
         { prop: 'dh', label: '预约单号' },
         { prop: 'sjrq', label: '预约日期' },
         { prop: 'xsmc', label: '仪器数量' },

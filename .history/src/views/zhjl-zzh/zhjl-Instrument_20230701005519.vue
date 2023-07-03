@@ -415,7 +415,7 @@ export default {
         { prop: 'factory_number', label: '出厂编号' },
         { prop: 'management_number', label: '管理编号' },
         { prop: 'installation_location', label: '安装位置' },
-        { prop: 'maximum_level', label: '误差' },
+        { prop: 'maximum_level', label: '准确度等级或最大允许误差' },
         { prop: 'number_of_instruments', label: '仪器数量' },
         { prop: 'calibration_date', label: '校准日期' },
         { prop: 'calibration_cycle', label: '周期' },
